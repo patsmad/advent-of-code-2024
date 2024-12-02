@@ -3,7 +3,7 @@ from get_input import get_input
 import re
 
 def day_num() -> int:
-    return int(re.search('.*day_([0-9]*)\.py', __file__).group(1))
+    return int(re.search(r'.*day_([0-9]*)\.py', __file__).group(1))
 
 day: int = day_num()
 
