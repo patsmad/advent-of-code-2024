@@ -40,15 +40,23 @@ def get_quadrant_counts(seconds, grid_x, grid_y, robots):
     ]
     return quadrant_counts
 
-def get_stats(seconds, robots):
-    positions = [robot.get_pos(seconds) for robot in robots]
+def get_sx(positions):
     n = len(positions)
-    mx = sum([pos[0] for pos in positions]) / n
-    my = sum([pos[1] for pos in positions]) / n
-    sx = (sum([(pos[0] - mx)**2 for pos in positions]) / n)**0.5
-    sy = (sum([(pos[1] - my) ** 2 for pos in positions]) / n) ** 0.5
-    return mx, my, sx, sy
+    m = sum([pos[0] for pos in positions]) / n
+    return (sum([(pos[0] - m)**2 for pos in positions]) / n)**0.5
 
+def get_sy(positions):
+    n = len(positions)
+    m = sum([pos[1] for pos in positions]) / n
+    return (sum([(pos[1] - m)**2 for pos in positions]) / n)**0.5
+
+def get_tree_seconds(robots):
+    seconds = 0
+    while True:
+        positions = [robot.get_pos(seconds) for robot in robots]
+        if get_sx(positions) < 20 and get_sy(positions) < 20:
+            return seconds
+        seconds += 1
 
 def run(test: bool) -> None:
     if not test:
@@ -80,13 +88,7 @@ def run(test: bool) -> None:
     print(p)
 
     # part 2
-    for seconds in range(1000000000):
-        mx, my, sx, sy = get_stats(seconds, robots)
-        # A little post hoc here, I do know the variance is likely to be small if it is forming a picture in the grid
-        # But the numbers are chosen as small enough to get the answer for my question, but possibly not all solutions
-        if sx < 20 and sy < 20:
-            print(seconds)
-            break
+    print(get_tree_seconds(robots))
 
 if __name__ == '__main__':
     parser: argparse.ArgumentParser = argparse.ArgumentParser()
