@@ -64,14 +64,14 @@ def run(test: bool) -> None:
         points.append((int(p2), int(p1)))
 
     # part 1
-    print(shortest_path(points[:steps], dim))
+    print(shortest_path(set(points[:steps]), dim))
 
     # part 2
     min_steps = steps
     max_steps = len(points)
     new_steps = (max_steps + min_steps) // 2
     while max_steps - min_steps > 1:
-        sp = shortest_path(points[:new_steps], dim)
+        sp = shortest_path(set(points[:new_steps]), dim)
         if sp is None:
             max_steps = new_steps
         else:
