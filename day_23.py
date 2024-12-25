@@ -102,7 +102,6 @@ def run(test: bool) -> None:
     print(','.join(sorted(max_graph[sorted(max_graph, key=lambda x: -len(max_graph[x]))[0]])))
 
 
-
 if __name__ == '__main__':
     parser: argparse.ArgumentParser = argparse.ArgumentParser()
     parser.add_argument('--test', action='store_true')
